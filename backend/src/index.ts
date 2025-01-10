@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import { json, urlencoded } from 'body-parser';
 import { mongoConnect } from './config/mongoDB';
 
+
 dotenv.config();
 mongoConnect()
 
