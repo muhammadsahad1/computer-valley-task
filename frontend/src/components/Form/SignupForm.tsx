@@ -1,29 +1,36 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { UserSignupData } from '../../types/user';
+import { createUser } from '../../api/auth';
+import toast from 'react-hot-toast';
 
-interface SignupFormData {
-    name: string;
-    address: string;
-    gender: string;
-    username: string;
-    password: string;
-    confirmPassword: string;
-}
+const SignupForm: React.FC = () => {
 
-const Signup: React.FC = () => {
+    const [loading, setLoading] = useState(false)
+    const navigator = useNavigate()
+
     const {
         register,
         handleSubmit,
         watch,
         formState: { errors }
-    } = useForm<SignupFormData>();
+    } = useForm<UserSignupData>();
 
     const password = watch("password");
 
-    const onSubmit = (data: SignupFormData) => {
+    const onSubmit = async (data: UserSignupData) => {
         console.log(data);
-        // Handle signup logic here
+        setLoading(!loading)
+        const result = await createUser(data)
+
+        if (result?.success) {
+            toast.success("Register successfull")
+            navigator('/home')
+        } else {
+            toast.error("Register failed")
+        }
+        setLoading(!loading)
     };
 
     return (
@@ -148,4 +155,4 @@ const Signup: React.FC = () => {
     );
 };
 
-export default Signup;
+export default SignupForm;

@@ -1,12 +1,10 @@
-
-import Signup from '../components/Form/SignupForm'
+import SignupForm from "../components/Form/SignupForm"
 
 const SignupPage = () => {
     return (
         <>
 
-            <Signup />
-
+            <SignupForm />
 
         </>
     )

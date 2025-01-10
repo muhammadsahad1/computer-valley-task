@@ -1,18 +1,18 @@
 export type UserData = {
     name: string,
-    email: string,
-    password: string,
+    username: string,
     address?: string,
-    gender?: string,
+    gender?: "male" | "female" | "other" | undefined;
+    password: string,
 }
 
 export type AuthResult = {
-    status: boolean;
+    success: boolean;
     data?: {
         id: string;
         token: string;
         name: string;
-        email: string;
+        username: string;
     };
     error?: string;
 }

@@ -5,7 +5,9 @@ import { createUser, loginUser } from '../auth/createUser';
 
 export const register = async (req: Request, res: Response): Promise<void> => {
     try {
+    
         const validatedData = registerSchema.parse(req.body);
+
         const user = await createUser(validatedData);
 
         res.cookie('auth_token', user.data?.token, {
@@ -18,7 +20,8 @@ export const register = async (req: Request, res: Response): Promise<void> => {
 
 
         const { token, ...userData } = user.data || {};
-        res.status(201).json(userData);
+        const { success } = user
+        res.status(201).json({ userData, success });
 
     } catch (error) {
         if (error instanceof z.ZodError) {
@@ -35,7 +38,7 @@ export const login = async (req: Request, res: Response) => {
         const validatedData = loginSchema.parse(req.body);
 
         // Authenticate user 
-        const user = await loginUser(validatedData.email, validatedData.password)
+        const user = await loginUser(validatedData.username, validatedData.password)
 
         res.cookie('auth_token', user.data?.token, {
             httpOnly: true,
