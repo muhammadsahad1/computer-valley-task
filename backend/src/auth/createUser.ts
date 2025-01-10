@@ -13,32 +13,33 @@ const createToken = (userId: string): string => {
 export const createUser = async (data: UserData): Promise<AuthResult> => {
     try {
 
-        const { username, password } = data
-        const exists = await User.find({ username })
-        console.log("exists =>", exists)
+        console.log(data)
+        const { email, password } = data
+        const exists = await User.find({ email })
         // check email is exists
-        if (!exists) {
-            return { success: false, error: 'Username already taken' };
+        console.log("exits", exists);
+
+        if (exists) {
+            return { success: false, error: 'email already taken' };
         }
 
         // creating new user with hashed pass for security 
         const hash = await bcrypt.hash(password, 10)
-        console.log("has", hash);
 
         const user = await User.create({
             ...data,
             password: hash
         })
-     
+
         const token = createToken(user._id as string)
-     
+
         // returing auth result 
         return {
             success: true,
             data: {
                 id: user._id as string,
                 token,
-                name: user.name,
+                email: user.email,
                 username: user.username
             }
         };
@@ -51,12 +52,12 @@ export const createUser = async (data: UserData): Promise<AuthResult> => {
 
 
 export const loginUser = async (
-    username: string,
+    email: string,
     password: string
 ): Promise<AuthResult> => {
     try {
         // Find user
-        const user = await User.findOne({ username });
+        const user = await User.findOne({ email });
 
         if (!user) {
             return { success: false, error: 'Invalid credentials' };
@@ -76,11 +77,12 @@ export const loginUser = async (
             data: {
                 id: user._id as string,
                 token,
-                name: user.name,
+                email: user.email,
                 username: user.username
             }
         };
     } catch (error) {
+        console.error(error)
         return { success: false, error: 'Login failed' };
     }
 };

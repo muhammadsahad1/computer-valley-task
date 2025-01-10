@@ -1,5 +1,6 @@
 export type UserData = {
-    name: string,
+    name?: string,
+    email: string,
     username: string,
     address?: string,
     gender?: "male" | "female" | "other" | undefined;
@@ -11,7 +12,7 @@ export type AuthResult = {
     data?: {
         id: string;
         token: string;
-        name: string;
+        email: string;
         username: string;
     };
     error?: string;
