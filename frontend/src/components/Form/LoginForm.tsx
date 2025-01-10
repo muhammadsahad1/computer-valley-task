@@ -5,7 +5,7 @@ import { UserLoginData } from '../../types/user';
 import { createUser } from '../../api/auth';
 
 const LoginForm: React.FC = () => {
-    const [userData, setUserData] = useState<UserLoginData>({ username: '', password: '' });
+    const [userData, setUserData] = useState<UserLoginData>({ email: '', password: '' });
 
     const {
         register,
@@ -30,20 +30,20 @@ const LoginForm: React.FC = () => {
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">Email</label>
                         <input
-                            {...register('username', {
-                                required: "Username is required",
-                                minLength: {
-                                    value: 4,
-                                    message: "Username must be at least 4 characters"
+                            {...register('email', {
+                                required: 'Email is required',
+                                pattern: {
+                                    value: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                                    message: 'Invalid email address'
                                 }
                             })}
                             type="text"
-                            name="username"
-                            className={`w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${errors.username ? 'border-red-500' : 'border-gray-300'
+                            name="email"
+                            className={`w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${errors.email ? 'border-red-500' : 'border-gray-300'
                                 }`}
                             placeholder="Enter your email"
                         />
-                        {errors.username && <p className="text-red-500 text-sm mt-2">{errors.username.message}</p>}
+                        {errors.email && <p className="text-red-500 text-sm mt-2">{errors.email.message}</p>}
                     </div>
 
                     <div>

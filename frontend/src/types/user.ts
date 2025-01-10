@@ -1,15 +1,22 @@
+// types/user.ts
 export interface UserSignupData {
-    name: string;
     username: string;
-    address: string;
-    gender: 'male' | 'female' | 'other';
+    email: string;
     password: string;
-    confirmPassword: string
+    confirmPassword: string;
 }
 
-
+export interface ProfileUpdateData {
+    name?: string;
+    address?: string;
+    gender?: 'male' | 'female' | 'other';
+    avatar?: string;
+    bio?: string;
+    phoneNumber?: string;
+    birthDate?: Date;
+}
 export interface UserLoginData {
-    username: string;
+    email: string;
     password: string;
 }
 
