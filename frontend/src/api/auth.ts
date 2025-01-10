@@ -3,8 +3,12 @@ import { UserLoginData, UserSignupData } from "../types/user";
 
 interface ApiResponse {
     success: boolean;
-    message: string;
-    data?: any;
+    error?: string,
+    userData?: {
+        id: string,
+        email: string,
+        username: string
+    }
 }
 
 
@@ -16,7 +20,7 @@ export const createUser = async (formData: UserSignupData): Promise<ApiResponse 
         console.error("Unexpected error:", error);
         return {
             success: false,
-            message: 'An unexpected error occurred.',
+            error: "An unexpected error occurred."
         };
     }
 }
@@ -30,7 +34,7 @@ export const loginUser = async (formData: UserLoginData): Promise<ApiResponse | 
         console.error("Unexpected error:", error);
         return {
             success: false,
-            message: 'An unexpected error occurred.',
+            error: 'An unexpected error occurred.',
         };
     }
 }

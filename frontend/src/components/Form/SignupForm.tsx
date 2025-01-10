@@ -4,10 +4,13 @@ import { Link, useNavigate } from 'react-router-dom';
 import { UserSignupData } from '../../types/user';
 import { createUser } from '../../api/auth';
 import toast from 'react-hot-toast';
+import { useDispatch } from 'react-redux';
+import { setAuthenticationStatus, setUserDetails } from '../../store/userSlice';
 
 const SignupForm: React.FC = () => {
     const [loading, setLoading] = useState(false)
     const navigator = useNavigate()
+    const dispatch = useDispatch()
 
     const {
         register,
@@ -22,11 +25,16 @@ const SignupForm: React.FC = () => {
         setLoading(true)
         try {
             const result = await createUser(data)
+            console.log(result)
             if (result?.success) {
+                // set user details in redux store
+                dispatch(setUserDetails(result.userData))
+                dispatch(setAuthenticationStatus(true))
                 toast.success("Registration successful")
-                navigator('/profile')
+                navigator('/home')
+
             } else {
-                toast.error("Registration failed")
+                toast.error(`${result?.error}`)
             }
         } catch (error) {
             toast.error("An error occurred")
@@ -50,7 +58,7 @@ const SignupForm: React.FC = () => {
                                 }
                             })}
                             type="email"
-                            className={`w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${errors.email ? 'border-red-500' : ''}`}
+                            className={`w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${errors.email ? 'border-red-500' : ''}`}
                         />
                         {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>}
                     </div>
@@ -66,7 +74,7 @@ const SignupForm: React.FC = () => {
                                 }
                             })}
                             type="text"
-                            className={`w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${errors.username ? 'border-red-500' : ''}`}
+                            className={`w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${errors.username ? 'border-red-500' : ''}`}
                         />
                         {errors.username && <p className="text-red-500 text-sm mt-1">{errors.username.message}</p>}
                     </div>
@@ -86,7 +94,7 @@ const SignupForm: React.FC = () => {
                                 }
                             })}
                             type="password"
-                            className={`w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${errors.password ? 'border-red-500' : ''}`}
+                            className={`w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${errors.password ? 'border-red-500' : ''}`}
                         />
                         {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password.message}</p>}
                     </div>
@@ -99,7 +107,7 @@ const SignupForm: React.FC = () => {
                                 validate: value => value === password || "Passwords do not match"
                             })}
                             type="password"
-                            className={`w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${errors.confirmPassword ? 'border-red-500' : ''}`}
+                            className={`w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${errors.confirmPassword ? 'border-red-500' : ''}`}
                         />
                         {errors.confirmPassword && <p className="text-red-500 text-sm mt-1">{errors.confirmPassword.message}</p>}
                     </div>
