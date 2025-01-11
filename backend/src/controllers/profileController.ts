@@ -11,7 +11,6 @@ export const updateProfile = async (req: any, res: Response):Promise<any> => {
         }
 
         const userId = req.user.id;
-
         const updatedProfile = await User.findByIdAndUpdate(userId, {
             $set: {
                 name,
