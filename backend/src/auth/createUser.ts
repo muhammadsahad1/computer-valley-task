@@ -15,7 +15,7 @@ export const createUser = async (data: UserData): Promise<AuthResult> => {
 
         console.log(data)
         const { email, password } = data
-        const exists = await User.find({ email })
+        const exists = await User.findOne({ email })
         // check email is exists
         console.log("exits", exists);
 

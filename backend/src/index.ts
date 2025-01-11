@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import { json, urlencoded } from 'body-parser';
 import { mongoConnect } from './config/mongoDB';
 import authRoute from './routes/authRoutes';
+import profileRoute from './routes/profileRoute';
 
 
 dotenv.config();
@@ -27,6 +28,7 @@ app.use('/', (req, res, next) => {
 })
 
 app.use('/api/auth', authRoute)
+app.use('/api/user', profileRoute)
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });
