@@ -1,10 +1,11 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import { json, urlencoded } from 'body-parser';
+import { urlencoded } from 'body-parser';
 import { mongoConnect } from './config/mongoDB';
 import authRoute from './routes/authRoutes';
-import profileRoute from './routes/profileRoute';
+import profileRoute from './routes/profileRoute'
+import cookieParser from 'cookie-parser'
 
 
 dotenv.config();
@@ -19,6 +20,7 @@ app.use(cors({
 }));
 
 app.use(express.json());
+app.use(cookieParser())
 app.use(urlencoded({ extended: true }));
 
 app.use('/', (req, res, next) => {

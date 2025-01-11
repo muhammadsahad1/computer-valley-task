@@ -10,7 +10,7 @@ interface AuthenticatedRequest extends Request {
 // Protect middleware
 export const protect = async (req: AuthenticatedRequest, res: Response, next: NextFunction): Promise<void> => {
     let token: string | undefined;
-
+    console.log("tokennnnnn", req.cookies)
     if (req.cookies.token) {
         token = req.cookies.token;
     }
