@@ -8,7 +8,7 @@ import userReducer from './userSlice'
 const persistConfig = {
     key: 'user',
     storage,
-    blacklist: ['isAuthenticated'],
+
 }
 
 const persistedReducer = persistReducer(persistConfig, userReducer);

@@ -4,11 +4,13 @@ import { Link, useNavigate } from 'react-router-dom';
 import { UserSignupData } from '../../types/user';
 import { createUser } from '../../api/auth';
 import toast from 'react-hot-toast';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setAuthenticationStatus, setUserDetails } from '../../store/userSlice';
+import { RootState } from '../../store';
 
 const SignupForm: React.FC = () => {
     const [loading, setLoading] = useState(false)
+    const isAuth = useSelector((state: RootState) => state.user.isAuthenticated)
     const navigator = useNavigate()
     const dispatch = useDispatch()
 
@@ -29,11 +31,12 @@ const SignupForm: React.FC = () => {
             if (result?.success) {
                 // set user details in redux store
                 dispatch(setUserDetails(result.userData))
-                dispatch(setAuthenticationStatus(true))
+                dispatch(setAuthenticationStatus(!isAuth))
                 toast.success("Registration successful")
                 navigator('/home')
 
             } else {
+                
                 toast.error(`${result?.error}`)
             }
         } catch (error) {

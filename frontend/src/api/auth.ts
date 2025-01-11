@@ -38,3 +38,18 @@ export const loginUser = async (formData: UserLoginData): Promise<ApiResponse | 
         };
     }
 }
+
+
+export const userLogout = async () => {
+    try {
+        const response = await axiosInstance.post('/auth/logout')
+
+        return response.data
+    } catch (error) {
+        console.error("err in logout", error)
+        return {
+            success: false,
+            error: 'An unexpected error occurred.',
+        };
+    }
+}

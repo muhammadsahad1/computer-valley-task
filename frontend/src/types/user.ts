@@ -10,7 +10,7 @@ export interface ProfileUpdateData {
     name?: string;
     address?: string;
     gender?: 'male' | 'female' | 'other';
-    avatar?: string;
+    avatar?: File;
     bio?: string;
     phoneNumber?: string;
     birthDate?: Date;

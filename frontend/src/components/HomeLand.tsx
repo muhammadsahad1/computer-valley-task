@@ -5,7 +5,8 @@ import { RootState } from '../store'
 
 const HomeComponent = () => {
     const user = useSelector((state: RootState) => state.user);
-    
+
+
     console.log("user", user)
     return (
         <div className="max-w-6xl p-4 w-full bg-black min-h-screen bg-gradient-to-r from-blue-300 to-white justify-center items-center">
