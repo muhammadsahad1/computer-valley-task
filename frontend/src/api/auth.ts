@@ -25,11 +25,11 @@ export const createUser = async (formData: UserSignupData): Promise<ApiResponse 
     }
 }
 
-export const loginUser = async (formData: UserLoginData): Promise<ApiResponse | undefined | null> => {
+export const loginUser = async (formData: UserLoginData): Promise<ApiResponse | any> => {
     try {
         const response = await axiosInstance.post('/auth/login', formData)
-
-        return response.data
+        return response
+        
     } catch (error) {
         console.error("Unexpected error:", error);
         return {
@@ -43,8 +43,8 @@ export const loginUser = async (formData: UserLoginData): Promise<ApiResponse | 
 export const userLogout = async () => {
     try {
         const response = await axiosInstance.post('/auth/logout')
-
         return response.data
+
     } catch (error) {
         console.error("err in logout", error)
         return {
